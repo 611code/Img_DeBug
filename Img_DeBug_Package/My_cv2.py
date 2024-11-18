@@ -20,6 +20,7 @@ def Get_Appoint_Color(img_BGR,distribution=1,func=empty,size=[200,200],part=0):
     if not isinstance(img_BGR,np.ndarray):
         print("这不是有效的图像")
         return -1
+    print("点击'q'退出")
     img_BGR = cv2.resize(img_BGR,size)
     imgHSV=cv2.cvtColor(img_BGR,cv2.COLOR_BGR2HSV)
     cv2.namedWindow("TrackBars")                               # 生成一个叫 name 的窗口
@@ -65,7 +66,14 @@ def Get_Appoint_Color(img_BGR,distribution=1,func=empty,size=[200,200],part=0):
             cv2.destroyWindow("src-hsv/mask/result")
             print("已退出")
             break
-
+'''
+功能:显示多个图像在一个窗口
+参数:
+    imgs:列表,包含你要显示的图像序列
+    window_name:你要显示窗口的名称
+    lines:每行显示的图像数
+    scale:图像的比例
+'''
 def Display_Imgs(imgs,window_name="imgs",lines=3,scale=1):
     max_height = int(max(image.shape[0] for image in imgs)*scale)
     max_width = int(max(image.shape[1] for image in imgs)*scale)
@@ -96,7 +104,7 @@ def Display_Imgs(imgs,window_name="imgs",lines=3,scale=1):
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    img = cv2.imread("../image_save/people.png")
-    Display_Imgs([img,img,img,img],window_name="imgs",lines=3,scale=0.1)
+    img = np.random.randint(0, 255, size=(300,300,3), dtype=np.uint8)
+    Display_Imgs([img,img,img,img],window_name="imgs",lines=3,scale=0.9)
     print(type(img))
     Get_Appoint_Color(img,distribution=0,size=[300,300],part=1)

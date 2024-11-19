@@ -115,6 +115,8 @@ def CV2_Imgs(imgs,window_name="imgs",lines=3,scale=1):
 """
 def PLT_Imgs(images, lines=3, figsize=(15, 10), titles=None):
     # 计算行数
+    if lines <=2:
+        lines = 2
     num_images = len(images)
     rows = int(num_images / lines) + (num_images % lines > 0)
     # 创建图形和子图

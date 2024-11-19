@@ -64,8 +64,7 @@ def Get_Appoint_Color(img_BGR,distribution=1,func=empty,size=[200,200],part=0):
             cv2.imshow('TrackBars',vertical_image)
         key = cv2.waitKey(1)                                    # 10表示暂停 10ms ,0表示一直停止
         if key & 0xFF== ord('q'):
-            cv2.destroyWindow('TrackBars')
-            cv2.destroyWindow("src-hsv/mask/result")
+            cv2.destroyAllWindows()
             print("已退出")
             break
 '''
@@ -155,12 +154,12 @@ if __name__ == '__main__':
     img = np.random.randint(0, 255, size=(30,30,3), dtype=np.uint8)
     # CV2_Imgs([img,img,img,img],window_name="imgs",lines=3,scale=0.9)
     # print(type(img))
-    # Get_Appoint_Color(img,distribution=0,size=[300,300],part=1)
+    Get_Appoint_Color(img,distribution=0,size=[300,300],part=1)
 
     # PLT_Imgs([img,img,img,img],lines=5)
 
-    a = 10
-    Data_DeBug("看看a",a)
+    # a = 10
+    # Data_DeBug("看看a",a)
 
 
 

@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
-
+import matplotlib.pyplot as plt
+import sys
+import os
 '''
 功能:获取指定颜色的hsv值
 参数:
@@ -74,7 +76,7 @@ def Get_Appoint_Color(img_BGR,distribution=1,func=empty,size=[200,200],part=0):
     lines:每行显示的图像数
     scale:图像的比例
 '''
-def Display_Imgs(imgs,window_name="imgs",lines=3,scale=1):
+def CV2_Imgs(imgs,window_name="imgs",lines=3,scale=1):
     max_height = int(max(image.shape[0] for image in imgs)*scale)
     max_width = int(max(image.shape[1] for image in imgs)*scale)
 
@@ -103,8 +105,62 @@ def Display_Imgs(imgs,window_name="imgs",lines=3,scale=1):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
+"""
+功能:显示多个 cv2 格式的图像在一个图形中。
+参数:
+    - images: 图像数据的列表，每个图像都是 numpy.ndarray 类型。
+    - cols: 每行显示的图像数量，默认为3。
+    - figsize: 图形的大小，默认为(15, 10)。
+    - titles: 图像标题的列表，如果提供，长度应与图像数量相同。
+"""
+def PLT_Imgs(images, lines=3, figsize=(15, 10), titles=None):
+    # 计算行数
+    num_images = len(images)
+    rows = int(num_images / lines) + (num_images % lines > 0)
+    # 创建图形和子图
+    fig, axs = plt.subplots(rows, lines, figsize=figsize)
+    # 如果只有一个子图，将其转换为列表
+    if isinstance(axs, plt.Axes):
+        axs = [axs]
+    # 展平子图列表
+    axs = axs.flatten()
+    # 显示图像
+    for i, img in enumerate(images):
+        # 将 BGR 图像转换为 RGB 图像
+        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        axs[i].imshow(img_rgb)
+        if titles and i < len(titles):
+            axs[i].set_title(titles[i])
+        axs[i].axis('off')
+    # 隐藏多余的子图
+    for j in range(num_images, len(axs)):
+        fig.delaxes(axs[j])
+    # 显示图形
+    plt.show()
+
+def Data_DeBug(msg,data):
+    try:
+        shape = data.shape
+    except:
+        shape = None
+    file_name = os.path.basename(__file__)
+    line_number = sys._getframe().f_lineno
+    print(f"[Message:{msg}, data:{data}, shape:{shape}, File:{file_name}, Line:{line_number}]")
+
+
+
 if __name__ == '__main__':
-    img = np.random.randint(0, 255, size=(300,300,3), dtype=np.uint8)
-    Display_Imgs([img,img,img,img],window_name="imgs",lines=3,scale=0.9)
-    print(type(img))
-    Get_Appoint_Color(img,distribution=0,size=[300,300],part=1)
+    img = np.random.randint(0, 255, size=(30,30,3), dtype=np.uint8)
+    # CV2_Imgs([img,img,img,img],window_name="imgs",lines=3,scale=0.9)
+    # print(type(img))
+    # Get_Appoint_Color(img,distribution=0,size=[300,300],part=1)
+
+    # PLT_Imgs([img,img,img,img],lines=5)
+
+    a = 10
+    Data_DeBug("看看a",a)
+
+
+
+
+
